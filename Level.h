@@ -34,8 +34,9 @@ private:
 	std::vector<std::vector<Tile>> TileVector;
 
 	// Layers
+	
 	Midground midground;
-	Background background;
+	//Background background;
 
 	void LoadMap(const char *path);
 	Tile LoadTile(char tileType, int x, int y);

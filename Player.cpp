@@ -25,7 +25,7 @@ sf::Vector2f Player::getPosition() {
 
 void Player::Update(sf::Time time) {
 	
-	/*// Vertical Movement
+	// Vertical Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		position.y -= 4;
 	} else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
@@ -37,7 +37,7 @@ void Player::Update(sf::Time time) {
 		position.x -= 15;
 	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		position.x += 15;
-	}*/
+	}
 
 }
 

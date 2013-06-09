@@ -16,6 +16,17 @@ Level::Level(sf::RenderWindow &window)
 
 	LoadMap("Content/Levels/1/layer1.txt");
 
+	/*// Layers
+	if (!layer2Texture.loadFromFile("Content/Images/Tileset_SpriteSheet_Layer2.png") ||
+		!layer2Texture.loadFromFile("Content/Images/Tileset_SpriteSheet_Layer3.png")) {
+		std::cout << "Couldn't load layers" << std::endl;
+	}
+
+	layer2.setTexture(layer2Texture);
+	layer2.setPosition(0, 0);
+	layer2.setTexture(layer3Texture);
+	layer3.setPosition(0, 0);*/
+
 }
 
 
@@ -100,15 +111,17 @@ Tile Level::LoadTile(char tileType, int x, int y) {
 
 void Level::Update(sf::Time time) {
 	
-	//camera.Update(player.getPosition());
+	camera.Update(player.getPosition());
+	midground.Update(player.getPosition());
 	player.Update(time);
 
 }
 
 void Level::Draw(sf::Time time) {
 
-	//background.Draw(window);
-	//midground.Draw(window);
+	camera.Draw(window);
+
+	midground.Draw(window);
 
 	// Draw Tiles
 	for (int r = 0; r < TileVector.size(); ++r) {
@@ -128,7 +141,5 @@ void Level::Draw(sf::Time time) {
 	}
 
 	player.Draw(window);
-
-	camera.Draw(window);
 
 }

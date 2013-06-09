@@ -5,7 +5,8 @@ Camera::Camera(void)
 	screenWidth = 1280;
 	screenHeight = 720;
 	position = sf::Vector2f(0.f, 0.f);
-	CameraPosition.setViewport(sf::FloatRect(position, sf::Vector2f(screenWidth, screenHeight)));
+	CameraPosition.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
+	CameraPosition.setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
 }
 
 
@@ -14,16 +15,16 @@ Camera::~Camera(void)
 }
 
 void Camera::Update(sf::Vector2f newPos) {
-	position = sf::Vector2f(0.f, 0.f);
+
+	position.x = newPos.x + 40 - (screenWidth / 2);
 	
 	if (position.x < 0) {
 		position.x = 0;
-	}
-	if (position.y < 0) {
-		position.y = 0;
+	} else if (position.x > 1280) {
+		position.x = 1280;
 	}
 
-	CameraPosition.setViewport(sf::FloatRect(position, sf::Vector2f(screenWidth, screenHeight)));
+	CameraPosition.reset(sf::FloatRect(position.x, position.y, screenWidth, screenHeight));
 
 }
 

@@ -16,7 +16,6 @@ public:
 	Camera(void);
 	~Camera(void);
 
-	sf::Vector2f GetCamera();
 	void Update(sf::Vector2f);
 	void Draw(sf::RenderWindow &window);
 
