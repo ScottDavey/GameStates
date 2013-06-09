@@ -18,6 +18,8 @@ Debug/*
 ipch/*
 *.sln
 *.sdf
+*.opensdf
 *.dll
 *.vcxproj
+*.vcxproj.*
 *.suo
