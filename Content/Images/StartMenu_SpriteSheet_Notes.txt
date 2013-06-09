@@ -1,0 +1,22 @@
+	
+	[x][x]
+	|  |
+	|  |____ Selected Value
+	|_______ Normal Value
+
+
+		LEFT		TOP		WIDTH		HEIGHT
+
+START		[10][150]	10		80		45
+
+OPTIONS		[10][150] 	55		110		45
+
+QUIT		[10][150]	100		70		45
+
+BACK		[10][150]	145		80		45
+
+VIDEO		[10][150]	190		80		45
+
+CREDITS		[10][150]	235		110		45
+
+GAME STATES	
