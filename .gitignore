@@ -11,3 +11,13 @@
 *.lai
 *.la
 *.a
+
+# Custom
+Release/*
+Debug/*
+ipch/*
+*.sln
+*.sdf
+*.dll
+*.vcxproj
+*.suo
