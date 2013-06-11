@@ -5,7 +5,9 @@
 #include "Player.h"
 #include "Midground.h"
 #include "Background.h"
+#include "GameMenu.h"
 #include "Tile.h"
+#include "CollisionLayer.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -33,13 +35,21 @@ private:
 	std::vector<std::vector<char>> MapVector;
 	std::vector<std::vector<Tile>> TileVector;
 
+	void LoadMap(const char *path);
+	Tile LoadTile(char tileType, int x, int y);
+
 	// Layers
 	
 	Midground midground;
-	//Background background;
+	Background background;
+	CollisionLayer collision;
 
-	void LoadMap(const char *path);
-	Tile LoadTile(char tileType, int x, int y);
+	// Game Menu
+	GameMenu menu;
+	bool showGameMenu;
+
+	bool keyLock;
+	bool mouseLock;
 
 public:
 	Level(sf::RenderWindow &window);

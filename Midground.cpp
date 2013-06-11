@@ -10,7 +10,7 @@ Midground::Midground(void)
 	}
 	sprite.setTexture(texture);
 
-	position = sf::Vector2f(0.f, 0.f);
+	position = sf::Vector2f(0.f, 440.f);
 
 }
 
@@ -30,7 +30,7 @@ void Midground::Update(sf::Vector2f newPos) {
 		position.x = 1280;
 	}
 
-	sprite.setPosition((position.x + 15), 0.f);
+	sprite.setPosition(position.x * 0.7f, 400.f);
 
 }
 

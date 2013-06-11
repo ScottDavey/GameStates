@@ -9,6 +9,7 @@ private:
 	sf::Sprite sprite;
 
 	sf::Vector2f position;
+	float angle;
 
 public:
 	Player(void);

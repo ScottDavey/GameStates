@@ -53,9 +53,6 @@ bool Program::Run () {
 				case GAME:
 					theClass = new Level(window);
 					break;
-				case gm_MAIN:
-					theClass = new StateThree(window);
-					break;
 				default:
 					theClass = new StartMenu(window);
 					break;

@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Tile.h"
 #include <iostream>
 
 class Midground
@@ -12,7 +11,6 @@ private:
 	sf::Sprite sprite;
 
 	sf::Vector2f position;
-
 public:
 	Midground(void);
 	~Midground(void);

@@ -5,8 +5,6 @@
 #include "StartMenu.h"
 #include "StartMenu_Options.h"
 #include "Level.h"
-#include "StateTwo.h"
-#include "StateThree.h"
 #include <iostream>
 #include <sstream>
 #include <vector>

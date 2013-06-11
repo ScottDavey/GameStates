@@ -16,16 +16,9 @@ Level::Level(sf::RenderWindow &window)
 
 	LoadMap("Content/Levels/1/layer1.txt");
 
-	/*// Layers
-	if (!layer2Texture.loadFromFile("Content/Images/Tileset_SpriteSheet_Layer2.png") ||
-		!layer2Texture.loadFromFile("Content/Images/Tileset_SpriteSheet_Layer3.png")) {
-		std::cout << "Couldn't load layers" << std::endl;
-	}
-
-	layer2.setTexture(layer2Texture);
-	layer2.setPosition(0, 0);
-	layer2.setTexture(layer3Texture);
-	layer3.setPosition(0, 0);*/
+	showGameMenu = false;
+	keyLock = true;
+	mouseLock = true;
 
 }
 
@@ -110,10 +103,49 @@ Tile Level::LoadTile(char tileType, int x, int y) {
 }
 
 void Level::Update(sf::Time time) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !keyLock) {
+		if (!showGameMenu) {
+			showGameMenu = true;
+		} else {
+			showGameMenu = false;
+		}
+		keyLock = true;
+	}
 	
+	if (showGameMenu) {
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+		if (menu.getQuitRect().contains(mousePos) && !mouseLock) {
+			menu.setQuitColor(sf::Color(0, 255, 128));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				window.close();
+			}
+			mouseLock = true;
+		} else if (menu.getBackRect().contains(mousePos) && !mouseLock) {
+			menu.setBackColor(sf::Color(0, 255, 128));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				showGameMenu = false;
+			}
+			mouseLock = true;
+		} else {
+			menu.setQuitColor(sf::Color(255, 255, 255));
+			menu.setBackColor(sf::Color(255, 255, 255));
+		}
+	}
+
 	camera.Update(player.getPosition());
+	background.Update(player.getPosition());
 	midground.Update(player.getPosition());
 	player.Update(time);
+
+	if (keyLock && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		keyLock = false;
+	}
+
+	if (mouseLock && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		mouseLock = false;
+	}
 
 }
 
@@ -121,14 +153,17 @@ void Level::Draw(sf::Time time) {
 
 	camera.Draw(window);
 
+	background.Draw(window);
 	midground.Draw(window);
 
 	// Draw Tiles
 	for (int r = 0; r < TileVector.size(); ++r) {
 		for (int c = 0; c < TileVector[r].size(); ++c) {
 			
-			// Only draw air tiles
-			if (TileVector[r][c].tileType != "A") {
+			float leftTile = (c * TileWidth) + TileWidth;
+
+			// Only draw air tiles and what's visible in the camera
+			if (TileVector[r][c].tileType != "A" && (leftTile > camera.GetScreenPosition().x && c * TileWidth < (camera.GetScreenPosition().x + 1280))) {
 				sf::Sprite tempSprite;
 				tempSprite.setTextureRect(TileVector[r][c].GetRect());
 				tempSprite.setTexture(TileVector[r][c].GetTexture());
@@ -141,5 +176,11 @@ void Level::Draw(sf::Time time) {
 	}
 
 	player.Draw(window);
+
+	if (showGameMenu) {
+		menu.Draw(window);
+	}
+
+	collision.Draw(window);
 
 }

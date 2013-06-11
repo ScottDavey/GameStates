@@ -16,6 +16,8 @@ public:
 	Camera(void);
 	~Camera(void);
 
+	sf::Vector2f GetScreenPosition();
+
 	void Update(sf::Vector2f);
 	void Draw(sf::RenderWindow &window);
 

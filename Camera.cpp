@@ -14,6 +14,10 @@ Camera::~Camera(void)
 {
 }
 
+sf::Vector2f Camera::GetScreenPosition() {
+	return position;
+}
+
 void Camera::Update(sf::Vector2f newPos) {
 
 	position.x = newPos.x + 40 - (screenWidth / 2);
