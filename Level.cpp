@@ -73,6 +73,9 @@ void Level::LoadMap(const char *path) {
 	// Clear up some stuff
 	MapVector.clear();
 
+	// Load Player
+	player.Initialize(TileVector);
+
 }
 
 Tile Level::LoadTile(char tileType, int x, int y) {
@@ -134,9 +137,9 @@ void Level::Update(sf::Time time) {
 		}
 	}
 
-	camera.Update(player.getPosition());
-	background.Update(player.getPosition());
-	midground.Update(player.getPosition());
+	camera.Update(player.position);
+	background.Update(player.position);
+	midground.Update(player.position);
 	player.Update(time);
 
 	if (keyLock && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -181,6 +184,6 @@ void Level::Draw(sf::Time time) {
 		menu.Draw(window);
 	}
 
-	collision.Draw(window);
+	//collision.Draw(window);
 
 }

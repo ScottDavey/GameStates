@@ -1,38 +1,43 @@
 #include "Player.h"
 
 
-Player::Player(void)
-{
+Player::Player(void) { }
 
-	// Initialize our player texture/sprite and origin/angle (for rotation)
+Player::~Player(void) { }
+
+void Player::Initialize(std::vector<std::vector<Tile>> &tiles) {
+
+	this->tiles = tiles;
+
+	// Initialize our player texture/sprite
 	if (!texture.loadFromFile("Content/Images/Ball.png")) {
 		std::cout << "No ball" << std::endl;
 	}
 	sprite.setTexture(texture);
-	position = sf::Vector2f(19.f, 659.f);
-	sprite.setOrigin(19.f, 19.f);
+
+	position = sf::Vector2f(19.f, 642.f);
+	velocity = sf::Vector2f(0.f, 0.f);
+
+	MoveAcceleration	= 7500.0f;
+	MaxMoveSpeed		= 100.f;
+	GroundDragFactor	= 0.11f;
+	AirDragFactor		= 0.65f;
+
+	MaxJumpTime			= 0.25f;
+	JumpLaunchVelocity	= -2000.0f;
+	GravityAcceleration = 3500.0f;
+	MaxFallSpeed		= 150.0f;
+	JumpControlPower	= 0.14f;
+
+	isJumping = false;
+	wasJumping = false;
+	isOnGround = true;
+
+	frameWidth = texture.getSize().x;
+	frameHeight = texture.getSize().y;
+
 	angle = 0.f;
 
-	// Bounding box
-	/*box.setSize(sf::Vector2f(38.f, 38.f));
-	box.setFillColor(sf::Color(255, 255, 255, 0));
-	box.setOutlineColor(sf::Color::Blue);
-	box.setOutlineThickness(1.f);
-	box.setOrigin(19.f, 19.f);
-	box.setPosition(sf::Vector2f(0.f, 659.f));*/
-}
-
-
-Player::~Player(void)
-{
-}
-
-void Player::setPosition(sf::Vector2f position) {
-	position = position;
-}
-
-sf::Vector2f Player::getPosition() {
-	return position;
 }
 
 void Player::Update(sf::Time time) {
@@ -46,44 +51,149 @@ void Player::Update(sf::Time time) {
 		position.y += 1 * gameTime * 750;
 	}
 
-	// Horizontal Movement (with rotation of ball)
+	// Horizontal Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		position.x += -1 * gameTime * 1000;
-		if (angle < 360.f && position.x > 19.f) {
-			sprite.setRotation(angle += -1 * gameTime * 3000);
-		} else {
-			angle = 0.f;
-		}
+		movement = -1.0f;
 	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		position.x += 1 * gameTime * 1000;
-		if (angle < 360.f && position.x < 2539.f) {
-			sprite.setRotation(angle += 1 * gameTime * 3000);
-		} else {
-			angle = 0.f;
+		movement = 1.0f;
+	}
+
+	// Jumping
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		isJumping = true;
+	}
+
+	ApplyPhysics(time);
+
+	movement = 0.f;
+	isJumping = false;
+
+}
+
+void Player::ApplyPhysics(sf::Time time) {
+	
+	float gameTime = time.asSeconds() * 10;
+	sf::Vector2f previousPosition = position;
+
+	// Base velocity is a combination of horizontal movement control and
+	// acceleration downward due to gravity
+	velocity.x += movement * MoveAcceleration * gameTime;
+	//velocity.y = Clamp(velocity.y + GravityAcceleration * gameTime, -MaxFallSpeed , MaxFallSpeed);
+
+	velocity.y = DoJump(velocity.y, gameTime);
+
+	// Apply drag factor
+	if (isOnGround) {
+		velocity.x *= GroundDragFactor;
+	} else {
+		velocity.x *= AirDragFactor;
+	}
+
+	// Prevent player from running faster than top speed
+	velocity.x = Clamp(velocity.x, -MaxMoveSpeed, MaxMoveSpeed);
+
+	// Apply velocity
+	position += velocity * gameTime;
+	position = sf::Vector2f((float)floor(position.x), (float)floor(position.y));
+
+	// Collision
+	HandleCollision();
+
+}
+
+void Player::HandleCollision() {
+
+	playerRow = floor((position.y + frameHeight) / 40);
+	playerCol = (int)((position.x + (frameWidth / 2)) / 40);
+
+	blRow = floor((position.y + frameHeight) - 10) / 40;
+	blCol = floor(position.x + 25) / 40;
+
+	brRow = floor((position.y + frameHeight) - 10) / 40;
+	brCol = floor((position.x + frameWidth) - 25) / 40;
+
+	tlRow = floor(position.y + 15) / 40;
+	tlCol = floor(position.x + 26) / 40;
+
+	trRow = floor(position.y + 15) / 40;
+	trCol = floor((position.x + frameWidth) - 26) / 40;
+
+	if (blRow < tiles.size() && blCol < tiles[0].size() && 
+		tlRow < tiles.size() && tlCol < tiles[0].size()) {
+
+		// Top
+		if(tiles[tlRow][tlCol].GetCollision() == "Impassable" || tiles[trRow][trCol].GetCollision() == "Impassable")
+		{
+			position.y = tiles[tlRow][tlCol].GetY();
 		}
+		
+		// Bottom
+		if(tiles[blRow][blCol].GetCollision() != "Passable" || tiles[brRow][brCol].GetCollision() != "Passable")
+		{
+			//isOnGround = true;
+			position.y = tiles[blRow][blCol].GetY() - (frameHeight - 1);
+		}
+		else
+		{
+			//isOnGround = false;
+		}
+
 	}
 
-	// Basic collision against horizontal screen bounds
-	if (position.x < 19.f) {
-		position.x = 19.f;
-	} else if(position.x > 2539.f) {
-		position.x = 2539.f;
+	// Screen Bounds
+	if (position.x < 0.f) {
+		position.x = 0.f;
+	} else if (position.x > 2541.f) {
+		position.x = 2541.f;
+	} else if (position.y < 0.f) {
+		position.y = 0.f;
+	}
+}
+
+float Player::DoJump(float velocityY, float gameTime) {
+
+	// If player wants to jump
+	if (isJumping) {
+		
+		// Begin or continue a jump
+		if ((!wasJumping && isOnGround) || jumpTime > 0.f) {
+			
+			jumpTime =+ gameTime;
+
+		}
+
+		// If we are in the ascent of the jump
+		if (0.f < jumpTime && jumpTime <= MaxJumpTime) {
+			
+			// Fully override the vertical velocity with a power curve that gives the player
+			// more control over the top of the jump
+			velocityY = JumpLaunchVelocity * (1.f - (float)pow(jumpTime / MaxJumpTime, JumpControlPower));
+
+		} else {
+			
+			// Reached the apex of the jump
+			jumpTime = 0.f;
+
+		}
+
+	} else {
+		
+		// Continues not jumping or cancels a jump in progress
+		jumpTime = 0.f;
+
 	}
 
-	// Basic collision against floor top of screen
-	if (position.y < 19.f) {
-		position.y = 19.f;
-	} else if (position.y > 659.f) {
-		position.y = 659.f;
-	}
+	wasJumping = isJumping;
 
-	// Set the bounding box
-	//box.setPosition(position);
+	return velocityY;
 
+}
+
+float Player::Clamp(float value, float min, float max) {
+	return value < min ? min : (value > max ? max : value);
 }
 
 void Player::Draw(sf::RenderWindow &window) {
 	sprite.setPosition(position);
 	window.draw(sprite);
-	//window.draw(box);
 }
