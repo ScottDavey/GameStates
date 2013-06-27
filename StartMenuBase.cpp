@@ -18,14 +18,14 @@ StartMenuBase::StartMenuBase(void)
 	bebas.loadFromFile("Content/Font/BebasNeue.otf");
 	harabara.loadFromFile("Content/Font/Harabara.ttf");
 
-	setTextAttributes(copyright, gothic, sf::Color(85, 85, 85), 12, 5.f, 700.f, "Copyright 2013, 0026sd");
-	setTextAttributes(release, gothic, sf::Color(85, 85, 85), 12, 1148.f, 700.f, "Alpha Release: v1.0.0");
+	setTextAttributes(copyright, gothic, sf::Color(85, 85, 85), 12, 5.f, 540.f, "Copyright 2013, 0026sd");
+	setTextAttributes(release, gothic, sf::Color(85, 85, 85), 12, 948.f, 540.f, "Alpha Release: v1.0.0");
 
 	menuHeadingRect = sf::IntRect(0, 0, 380, 54);
 
 	menuHeading.setTexture(TexutureSpriteSheet);
 	menuHeading.setTextureRect(menuHeadingRect);
-	menuHeading.setPosition(240.f, 160.f);
+	menuHeading.setPosition(240.f, 60.f);
 
 }
 

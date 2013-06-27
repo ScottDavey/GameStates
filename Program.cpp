@@ -3,11 +3,11 @@
 State BaseClass::gameState = sm_MAIN;
 
 Program::Program(void)
-	: window(sf::VideoMode(1280, 720), "Finite State Machine"),
+	: window(sf::VideoMode(1080, 560), "Finite State Machine"),
 	activeState(sm_MAIN)
 {
 
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(200);
 
 	font_FPS.loadFromFile("Content/Font/GOTHIC.TTF");
 
@@ -15,7 +15,7 @@ Program::Program(void)
 	text_FPS.setFont(font_FPS);
 	text_FPS.setCharacterSize(12);
 	text_FPS.setColor(sf::Color(85, 85, 85));
-	text_FPS.setPosition(605, 700);
+	text_FPS.setPosition(505, 540);
 
 	fps = 0.0f;
 
@@ -52,6 +52,9 @@ bool Program::Run () {
 					break;
 				case GAME:
 					theClass = new Level(window);
+					break;
+				case GAME2:
+					theClass = new Level2(window);
 					break;
 				default:
 					theClass = new StartMenu(window);

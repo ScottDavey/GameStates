@@ -7,7 +7,6 @@
 #include "Background.h"
 #include "GameMenu.h"
 #include "Tile.h"
-#include "CollisionLayer.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -41,8 +40,7 @@ private:
 	// Layers
 	
 	Midground midground;
-	Background background;
-	CollisionLayer collision;
+	//Background background;
 
 	// Game Menu
 	GameMenu menu;

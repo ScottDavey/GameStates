@@ -1,0 +1,11 @@
+- Text document will store all of the xy coordinates of each point of each line. Ex:
+	
+	POINT	X1	Y1	X2	Y2
+	1	10.0	10.0	20.0	40.0
+	2	20.0	40.0	40.0	60.0
+	3	40.0	60.0	100.0	100.0
+
+- When the level loads the code will parse the file and insert each x1, y1, x2 and y2 coordinates into a 2D array.
+- When the player is moving a test will be done to calculate where the player's x value sits amongst the 2 x coordinates
+of each point. A difference between the 2 y coordinates will be calculated and then check to see if the player is within
+those values, stopping the player's movement, if true.

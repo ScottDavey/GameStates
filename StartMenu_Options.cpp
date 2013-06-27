@@ -5,22 +5,22 @@ StartMenu_Options::StartMenu_Options(sf::RenderWindow &window)
 	: window(window)
 {
 
-	setTextAttributes(menuEntryBack, bebas, sf::Color(255, 255, 255), 36, 250.f, 250.f, "Back");
-	setTextAttributes(menuEntryVideo, bebas, sf::Color(255, 255, 255), 36, 250.f, 325.f, "Video");
-	setTextAttributes(menuEntryCredits, bebas, sf::Color(255, 255, 255), 36, 250.f, 400.f, "Credits");
+	setTextAttributes(menuEntryBack, bebas, sf::Color(255, 255, 255), 36, 250.f, 150.f, "Back");
+	setTextAttributes(menuEntryVideo, bebas, sf::Color(255, 255, 255), 36, 250.f, 225.f, "Video");
+	setTextAttributes(menuEntryCredits, bebas, sf::Color(255, 255, 255), 36, 250.f, 300.f, "Credits");
 
-	menuEntryBackRect = sf::IntRect(250, 250, 80, 45);
-	menuEntryVideoRect = sf::IntRect(250, 325, 80, 45);
-	menuEntryCreditsRect = sf::IntRect(250, 400, 110, 45);
+	menuEntryBackRect = sf::IntRect(250, 150, 80, 45);
+	menuEntryVideoRect = sf::IntRect(250, 225, 80, 45);
+	menuEntryCreditsRect = sf::IntRect(250, 300, 110, 45);
 
 	verticalSync = "false";
 	videoSettingsString << "Vertical Sync:\t\t" << verticalSync << "\n";
-	setTextAttributes(videoSettings, gothic, sf::Color(170, 170, 170), 20, 400.f, 260.f, videoSettingsString.str());
+	setTextAttributes(videoSettings, gothic, sf::Color(170, 170, 170), 20, 400.f, 160.f, videoSettingsString.str());
 
 	showVideo = false;
 
 	creditText = "GameStates:\n\nGameStates was created by 0026sd\nand was meant for learning purposes.\n\nThe Graphics and fonts in this program\nare being used for personal development only.";
-	setTextAttributes(credits, gothic, sf::Color(170, 170, 170, 0), 20, 400.f, 260.f, creditText);
+	setTextAttributes(credits, gothic, sf::Color(170, 170, 170, 0), 20, 400.f, 160.f, creditText);
 
 	showCredits = false;
 	creditAlpha = 0;

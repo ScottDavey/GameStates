@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Tile.h"
 #include <iostream>
+#include <sstream>
 
 class Player
 {
@@ -33,27 +34,36 @@ private:
 	float jumpTime;
 
 	// Collision Variables
-	int playerRow;
-	int playerCol;
+	sf::Vector2i topLeftRowCol;
+	sf::Vector2i topRightRowCol;
+	sf::Vector2i bottomLeftRowCol;
+	sf::Vector2i bottomRightRowCol;
+	sf::Vector2i horLeftRowCol;
+	sf::Vector2i horRightRowCol;
+	sf::IntRect playerBox;
+	sf::IntRect topLeft;
+	sf::IntRect topRight;
+	sf::IntRect bottomLeft;
+	sf::IntRect bottomRight;
+	sf::IntRect horTop;
+	sf::IntRect horBottom;
 
-	int blRow;
-	int blCol;
-	int brRow;
-	int brCol;
-	int tlRow;
-	int tlCol;
-	int trRow;
-	int trCol;
+	sf::RectangleShape left;
+	sf::RectangleShape right;
 
 	// Animation Variables
 	int frameWidth;
 	int frameHeight;
 
+	// General Variables
+	bool keyLock;
+
 	// Private Methods
-	void ApplyPhysics(sf::Time time);
+	void ApplyPhysics(float gameTime);
 	void HandleCollision();
 	float DoJump(float velocityY, float velocityX);
 	float Clamp(float value, float min, float max);
+	void setRectangle(sf::RectangleShape &rect, sf::Vector2f position, sf::Vector2f size, sf::Color outline, float border);
 
 public:
 	Player(void);

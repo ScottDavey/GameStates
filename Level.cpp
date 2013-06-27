@@ -87,7 +87,7 @@ Tile Level::LoadTile(char tileType, int x, int y) {
 			break;
 		case 'O':
 			// Orange Tile
-			return Tile(tileSpriteSheet, tile2Rect, x, y, "Platform", "O");
+			return Tile(tileSpriteSheet, tile1Rect, x, y, "Platform", "O");
 			break;
 		case 'B':
 			// Blue Tile
@@ -95,7 +95,7 @@ Tile Level::LoadTile(char tileType, int x, int y) {
 			break;
 		case 'G':
 			// Green Tile
-			return Tile(tileSpriteSheet, tile1Rect, x, y, "Platform", "G");
+			return Tile(tileSpriteSheet, tile2Rect, x, y, "Platform", "G");
 			break;
 		default:
 			// Tile not assigned so return an Air Tile
@@ -131,14 +131,21 @@ void Level::Update(sf::Time time) {
 				showGameMenu = false;
 			}
 			mouseLock = true;
+		} else if (menu.getMenuRect().contains(mousePos) && !mouseLock) {
+			menu.setMenuColor(sf::Color(0, 255, 128));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				gameState = sm_MAIN;
+			}
+			mouseLock = true;
 		} else {
 			menu.setQuitColor(sf::Color(255, 255, 255));
 			menu.setBackColor(sf::Color(255, 255, 255));
+			menu.setMenuColor(sf::Color(255, 255, 255));
 		}
 	}
 
 	camera.Update(player.position);
-	background.Update(player.position);
+	//background.Update(player.position);
 	midground.Update(player.position);
 	player.Update(time);
 
@@ -156,7 +163,7 @@ void Level::Draw(sf::Time time) {
 
 	camera.Draw(window);
 
-	background.Draw(window);
+	//background.Draw(window);
 	midground.Draw(window);
 
 	// Draw Tiles

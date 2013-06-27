@@ -1,0 +1,10 @@
+Level editor:
+
+This level editor will be built into the already existing game as a separate game state and can be accessed from the main menu.
+
+	- Objects can be added to the screen.
+	- There will be multiple layers to work with
+	- Within those layers will be a collision layer
+	- The level can be saved, then tested (saving will populate 1 text file per layer which will contain all necessary
+	information like coordinates, rotation, filepaths, etc)
+	- Testing will basically just change the state of the game from editing to playing

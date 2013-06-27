@@ -21,12 +21,12 @@ Background::~Background(void)
 
 void Background::Update(sf::Vector2f newPos) {
 
-	position.x = newPos.x + 40 - (1280 / 2);
+	position.x = newPos.x + 40 - (1080 / 2);
 	
 	if (position.x < 0) {
 		position.x = 0;
-	} else if (position.x > 1280) {
-		position.x = 1280;
+	} else if (position.x > 1080) {
+		position.x = 1080;
 	}
 
 	sprite.setPosition(position.x * 0.9f, 0.f);

@@ -15,9 +15,11 @@ GameMenu::GameMenu(void)
 	setTextAttributes(heading, gothic, sf::Color(255, 255, 255), 36, 410.f, 230.f, "Game Menu");
 	setTextAttributes(menuEntryQuit, bebas, sf::Color(200, 200, 200), 30, 420.f, 300.f, "Quit");
 	setTextAttributes(menuEntryBack, bebas, sf::Color(200, 200, 200), 30, 420.f, 340.f, "Back (Esc)");
+	setTextAttributes(menuEntryMenu, bebas, sf::Color(200, 200, 200), 30, 420.f, 380.f, "Main Menu");
 
 	quitRect = sf::IntRect(420.f, 300.f, 40.f, 30.f);
 	backRect = sf::IntRect(420.f, 340.f, 100.f, 30.f);
+	menuRect = sf::IntRect(420.f, 380.f, 100.f, 30.f);
 
 	mouseLock = true;
 
@@ -44,12 +46,20 @@ void GameMenu::setBackColor(sf::Color color) {
 	menuEntryBack.setColor(color);
 }
 
+void GameMenu::setMenuColor(sf::Color color) {
+	menuEntryMenu.setColor(color);
+}
+
 sf::IntRect GameMenu::getQuitRect() {
 	return quitRect;
 }
 
 sf::IntRect GameMenu::getBackRect() {
 	return backRect;
+}
+
+sf::IntRect GameMenu::getMenuRect() {
+	return menuRect;
 }
 
 void GameMenu::Update(sf::RenderWindow &window) {
@@ -60,4 +70,5 @@ void GameMenu::Draw(sf::RenderWindow &window) {
 	window.draw(heading);
 	window.draw(menuEntryQuit);
 	window.draw(menuEntryBack);
+	window.draw(menuEntryMenu);
 }

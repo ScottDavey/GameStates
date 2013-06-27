@@ -11,10 +11,12 @@ private:
 	sf::RenderWindow &window;
 
 	sf::Text menuEntryStart;
+	sf::Text menuEntryStart2;
 	sf::Text menuEntryOptions;
 	sf::Text menuEntryQuit;
 
 	sf::IntRect menuEntryStartRect;
+	sf::IntRect menuEntryStartRect2;
 	sf::IntRect menuEntryOptionsRect;
 	sf::IntRect menuEntryQuitRect;
 

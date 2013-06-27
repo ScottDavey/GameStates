@@ -6,5 +6,6 @@ enum State {
 	sm_OPTIONS_VIDEO,
 	sm_OPTIONS_CREDITS,
 	GAME,
+	GAME2,
 	gm_MAIN
 };
